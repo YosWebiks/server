@@ -13,7 +13,7 @@ const userSchema = new Schema<IUser>({
     type: String,
     unique: true,
   },
-  password: String,
+  password: { type: String, required: true },
   isAdmin: {
     type: Boolean,
     default: false,
