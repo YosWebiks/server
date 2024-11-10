@@ -36,3 +36,14 @@ export const initDatabase = async () => {
     );
   }
 };
+
+
+export const getCandidateList = async () => {
+    try {
+        const list = await Candidate.find({})
+        return list
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
