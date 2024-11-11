@@ -4,6 +4,7 @@ import { VoteDto } from "../typs/dto/vote";
 
 export const handleNewVote = async (vote: VoteDto) => {
   try {
+    console.log({vote})
     await Candidate.findByIdAndUpdate(vote.candidateId, {
       $inc: {
         votes: 1,
