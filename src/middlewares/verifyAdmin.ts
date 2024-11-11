@@ -10,7 +10,8 @@ export default (req: Request, res: Response, next: NextFunction) => {
       });
       return;
     }
-    const payload = jwt.verify(token, process.env.JWT_SECRET!);
+    console.log(token)
+    const payload = jwt.verify(token[0], process.env.JWT_SECRET!);
     (req as any).user = payload;
     if (!(payload as any).isAdmin) {
       res.status(403).json({
