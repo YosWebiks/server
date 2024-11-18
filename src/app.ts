@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import usersController from "./controllers/users";
@@ -12,16 +12,16 @@ import { handleSocketConnection } from "./sockets/io";
 
 const PORT = process.env.PORT || 3000;
 
-const app = express();
+export const app = express();
 const httpServer = http.createServer(app);
 export const io = new Server(httpServer, {
   cors: {
     origin: "*",
     methods: "*",
   },
-}); 
+});
 
-io.on("connection", handleSocketConnection)
+io.on("connection", handleSocketConnection);
 
 connectToMongo();
 
@@ -32,6 +32,10 @@ app.use("/api/users", usersController);
 app.use("/api/admin", adminController);
 app.use("/api/votes", votesController);
 app.use("/api/candidates", candidatesController);
+
+app.get("/ping", (req: Request, res: Response) => {
+  res.status(200).send("pong");
+});
 
 httpServer.listen(PORT, () => {
   console.log(`Server started, Visit "http://localhost:${PORT}"`);
