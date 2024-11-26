@@ -15,6 +15,7 @@ export const getList = async (req: Request, res: Response) => {
   try {
     const list = await getCandidateList();
     if (!list.length) {
+      console.log("initializing sid")
       await initDatabase();
     }
     res.json(await getCandidateList());
