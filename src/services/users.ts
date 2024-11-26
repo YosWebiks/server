@@ -31,7 +31,6 @@ export const userLogin = async (user: LoginDto) => {
 
 export const createNewUser = async (user: RegisterDto) => {
   try {
-    console.log({ user });
     if (!user.password)
       throw new Error("Missing user data, [password] is require");
     const encPass = await hash(user.password, 10);

@@ -10,7 +10,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
       });
       return;
     }
-    console.log(token)
     const payload = jwt.verify(token, process.env.JWT_SECRET!);
     (req as any).user = payload;
     if (!(payload as any).isAdmin) {

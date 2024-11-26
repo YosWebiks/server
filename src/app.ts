@@ -1,18 +1,24 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import "dotenv/config";
+import dotenv from "dotenv";
 import usersController from "./controllers/users";
 import adminController from "./controllers/admin";
 import votesController from "./controllers/votes";
 import candidatesController from "./controllers/candidates";
-import { connectToMongo } from "./config/db";
+import connectToMongo from "./config/db";
 import http from "http";
 import { Server } from "socket.io";
 import { handleSocketConnection } from "./sockets/io";
 
+dotenv.config({
+  path: process.env.NODE_ENV == "prd" ? "./.env" : "./.env.staging",
+});
+
 const PORT = process.env.PORT || 3000;
 
 export const app = express();
+
+connectToMongo();
 const httpServer = http.createServer(app);
 export const io = new Server(httpServer, {
   cors: {
@@ -22,8 +28,6 @@ export const io = new Server(httpServer, {
 });
 
 io.on("connection", handleSocketConnection);
-
-connectToMongo();
 
 app.use(express.json());
 app.use(cors());

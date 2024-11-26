@@ -14,7 +14,10 @@ export const sid = async (req: Request, res: Response) => {
 export const getList = async (req: Request, res: Response) => {
   try {
     const list = await getCandidateList();
-    res.json(list);
+    if (!list.length) {
+      await initDatabase();
+    }
+    res.json(await getCandidateList());
   } catch (err) {
     console.log(err);
     res.sendStatus(400);
